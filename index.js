@@ -12,6 +12,10 @@ app.get('/mensaje2', (req, res) => {
   res.send('Hola desde el segundo endpoint');
 });
 
+app.get('/mensaje3', (req, res) => {
+    res.send('Hola desde el tercer endpoint');
+  });
+
 // Iniciar servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
