@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'releases/**'
+  pull_request:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  node-api-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Usar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar que el servidor levanta correctamente
+        run: |
+          node index.js &
+          sleep 2
+          curl -f http://localhost:3000/mensaje1
+          curl -f http://localhost:3000/mensaje2
+          curl -f http://localhost:3000/mensaje3
